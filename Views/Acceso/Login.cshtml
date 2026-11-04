@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesión - Sistema Renta Sakila</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="text-center mb-4">Sistema Renta Sakila</h3>
+
+                        @if (ViewData["Error"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @ViewData["Error"]
+                            </div>
+                        }
+
+                        <form asp-controller="Acceso" asp-action="Login" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">Correo electrónico</label>
+                                <!-- El name debe ser 'correo' para que llegue bien al controlador -->
+                                <input type="email" name="correo" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contraseña</label>
+                                <input type="password" name="password" class="form-control" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+                        </form>
+
+                        <div class="mt-3 text-center">
+                            <a asp-controller="Acceso" asp-action="Registrar">¿No tienes cuenta? Regístrate aquí</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

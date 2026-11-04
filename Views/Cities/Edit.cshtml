@@ -1,0 +1,44 @@
+﻿@model SakilaWebMVC.Models.City
+
+@{
+    ViewData["Title"] = "Editar Ciudad";
+}
+
+<div class="container mt-4">
+    <h2>Editar Ciudad y su País</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Campo oculto para conservar el ID de la ciudad -->
+                <input type="hidden" asp-for="CityId" />
+
+                <div class="mb-3">
+                    <label asp-for="CityName" class="form-label">Nombre de la Ciudad</label>
+                    <input asp-for="CityName" class="form-control" />
+                    <span asp-validation-for="CityName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="CountryId" class="form-label">Seleccione el País</label>
+                    <select asp-for="CountryId" class="form-select" asp-items="ViewBag.CountriesList">
+                        <option value="">-- Seleccione un País --</option>
+                    </select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

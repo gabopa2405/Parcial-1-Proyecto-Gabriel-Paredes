@@ -1,0 +1,36 @@
+﻿@model SakilaWebMVC.Models.Country
+
+@{
+    ViewData["Title"] = "Editar País";
+}
+
+<div class="container mt-4">
+    <h2>Editar Nombre del País</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Campo oculto para mantener el ID que estamos editando -->
+                <input type="hidden" asp-for="CountryId" />
+
+                <div class="mb-3">
+                    <label asp-for="CountryName" class="form-label">Nombre del País</label>
+                    <input asp-for="CountryName" class="form-control" />
+                    <span asp-validation-for="CountryName" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

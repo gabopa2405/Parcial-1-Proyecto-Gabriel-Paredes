@@ -1,0 +1,42 @@
+﻿@model SakilaWebMVC.Models.City
+
+@{
+    ViewData["Title"] = "Crear Ciudad";
+}
+
+<div class="container mt-4">
+    <h2>Registrar Nueva Ciudad</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="CityName" class="form-label">Nombre de la Ciudad</label>
+                    <input asp-for="CityName" class="form-control" />
+                    <span asp-validation-for="CityName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="CountryId" class="form-label">Seleccione el País</label>
+                    <!-- Aquí usamos el ViewBag.CountriesList para renderizar el menú desplegable -->
+                    <select asp-for="CountryId" class="form-select" asp-items="ViewBag.CountriesList">
+                        <option value="">-- Seleccione un País --</option>
+                    </select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

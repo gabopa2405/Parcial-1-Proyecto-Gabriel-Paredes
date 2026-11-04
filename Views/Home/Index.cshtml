@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Página Principal - Sakila";
+}
+
+<div class="container mt-4">
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border">
+        <div class="container-fluid py-3">
+            <h1 class="display-5 fw-bold text-dark">Sistema Sakila Web (ADO.NET)</h1>
+            <p class="col-md-8 fs-4 text-secondary mt-2">
+                Aplicación ASP.NET Core MVC desarrollada para gestionar la relación de uno a muchos (<strong>1:N</strong>) entre las tablas <code>country</code> y <code>city</code> utilizando ADO.NET puro sin Entity Framework.
+            </p>
+        </div>
+    </div>
+
+    <!-- Tarjetas de Estadísticas conectadas a la BD -->
+    <div class="row text-center">
+        <div class="col-md-6 mb-4">
+            <div class="card text-white bg-primary shadow h-100">
+                <div class="card-body py-4">
+                    <h5 class="card-title text-uppercase fw-semibold">Total de Países Registrados</h5>
+                    <p class="card-text display-4 fw-bold my-3">@ViewBag.TotalCountries</p>
+                    <a asp-controller="Countries" asp-action="Index" class="btn btn-light text-primary fw-bold px-4">Gestionar Países</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card text-white bg-success shadow h-100">
+                <div class="card-body py-4">
+                    <h5 class="card-title text-uppercase fw-semibold">Total de Ciudades Registradas</h5>
+                    <p class="card-text display-4 fw-bold my-3">@ViewBag.TotalCities</p>
+                    <a asp-controller="Cities" asp-action="Index" class="btn btn-light text-success fw-bold px-4">Gestionar Ciudades</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

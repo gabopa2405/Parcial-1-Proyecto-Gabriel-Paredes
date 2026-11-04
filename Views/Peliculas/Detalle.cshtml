@@ -1,0 +1,22 @@
+﻿@model SakilaWebMVC.Models.Film
+
+@{
+    ViewData["Title"] = "Detalle de Película";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4">
+        <h2>@Model.Title</h2>
+        <hr />
+        <p><strong>Descripción:</strong> @Model.Description</p>
+        <p><strong>Año de lanzamiento:</strong> @Model.ReleaseYear</p>
+        <p><strong>Duración del alquiler:</strong> @Model.RentalDuration días</p>
+        <p><strong>Precio:</strong> $@Model.RentalRate</p>
+        <p><strong>Duración en minutos:</strong> @Model.Length min</p>
+        <p><strong>Clasificación:</strong> <span class="badge bg-info text-dark">@Model.Rating</span></p>
+
+        <div class="mt-3">
+            <a class="btn btn-secondary" href="@Url.Action("Index", "Peliculas")">Volver al Catálogo</a>
+        </div>
+    </div>
+</div>

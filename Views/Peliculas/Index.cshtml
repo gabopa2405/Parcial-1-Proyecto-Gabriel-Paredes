@@ -1,0 +1,110 @@
+﻿@model IEnumerable<SakilaWebMVC.Models.Film>
+
+@{
+    ViewData["Title"] = "Catálogo de Películas";
+    var rol = Context.Session.GetString("Rol");
+    var usuario = Context.Session.GetString("Usuario");
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white shadow-sm rounded">
+        <div>
+            <h2>Catálogo de Películas</h2>
+        </div>
+        <div>
+            <span class="badge bg-secondary me-2">Usuario: @usuario</span>
+            <span class="badge bg-primary me-3">Rol: @rol</span>
+            @if (rol == "Cliente")
+            {
+                <a class="btn btn-outline-primary btn-sm me-2" href="@Url.Action("MisAlquileres", "Peliculas")">Mis Alquileres</a>
+            }
+            @if (rol == "Administrador")
+            {
+                <a class="btn btn-outline-dark btn-sm me-2" href="@Url.Action("PeliculasMasAlquiladas", "Peliculas")">Reporte Top 10</a>
+            }
+            <a class="btn btn-outline-danger btn-sm" href="@Url.Action("CerrarSesion", "Acceso")">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Mensaje"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row mb-3 align-items-center">
+        <div class="col-md-6">
+            <form asp-controller="Peliculas" asp-action="Index" method="get" class="input-group">
+                <input type="text" name="buscar" class="form-control" placeholder="Buscar película por título..." />
+                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="col-md-6 text-end">
+            @if (rol == "Administrador")
+            {
+                <a class="btn btn-success" href="@Url.Action("Crear", "Peliculas")">+ Agregar Nueva Película</a>
+            }
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Año</th>
+                        <th>Duración</th>
+                        <th>Precio</th>
+                        <th>Clasificación</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Detalle", "Peliculas", new { id = item.FilmId })" class="text-decoration-none fw-bold">
+                                    @item.Title
+                                </a>
+                            </td>
+                            <td>@(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)</td>
+                            <td>@item.ReleaseYear</td>
+                            <td>@item.RentalDuration días</td>
+                            <td>$@item.RentalRate</td>
+                            <td><span class="badge bg-info text-dark">@item.Rating</span></td>
+                            <td class="text-center">
+                                <a class="btn btn-info btn-sm me-1" href="@Url.Action("Detalle", "Peliculas", new { id = item.FilmId })">Detalle</a>
+                                @if (rol == "Cliente")
+                                {
+                                    <form asp-controller="Peliculas" asp-action="Alquilar" method="post" style="display:inline;">
+                                        <input type="hidden" name="filmId" value="@item.FilmId" />
+                                        <button type="submit" class="btn btn-primary btn-sm">Alquilar</button>
+                                    </form>
+                                }
+                                else if (rol == "Administrador")
+                                {
+                                    <form asp-controller="Peliculas" asp-action="EliminacionLogica" method="post" style="display:inline;">
+                                        <input type="hidden" name="filmId" value="@item.FilmId" />
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar lógicamente esta película?');">Eliminar</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

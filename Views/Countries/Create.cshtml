@@ -1,0 +1,33 @@
+﻿@model SakilaWebMVC.Models.Country
+
+@{
+    ViewData["Title"] = "Crear País";
+}
+
+<div class="container mt-4">
+    <h2>Registrar Nuevo País</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="CountryName" class="form-label">Nombre del País</label>
+                    <input asp-for="CountryName" class="form-label form-control" />
+                    <span asp-validation-for="CountryName" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
